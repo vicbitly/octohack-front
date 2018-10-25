@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: octohack-front
+spec:
+  selector:
+    matchLabels:
+      run: octohack-front
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        run: octohack-front
+    spec:
+      containers:
+      - name: nginxhttps
+        image: us.gcr.io/octohack-220220/octohack-back@sha256:97dac66c0a367a21eca4192c9ec23016b38c661bb788735d44bf5b42e2cc8770
+        ports:
+        - containerPort: 8080
+      - name: octohack-front
+        image: us.gcr.io/octohack-220220/octohack-front
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: octohack-front
+  labels:
+    run: octohack-front
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    run: octohack-front
