@@ -1,3 +1,16 @@
+let endpointIp: string = '35.192.143.42';
+let endpointPort: string = '80';
+
+getEndpointData().then((response) => {
+  endpointIp = response.ip;
+  endpointPort = response.port;
+});
+
+export interface IEndpoint {
+  ip: string;
+  port: string;
+}
+
 export interface IReadUser {
   email: string;
   id: number;
@@ -13,17 +26,44 @@ export async function saveName(name: string): Promise<string> {
   return Promise.resolve(`${name ? `Hello, ${name}` : ''}`);
 }
 
+export async function getEndpointData(): Promise<IEndpoint> {
+  return fetch('/endpoint').then((response) => {
+    return response.json().then((data) => {
+      return {
+        ip: data.ip,
+        port: data.port
+      };
+    });
+  });
+}
+
 export async function getUser(name: string): Promise<IReadUser | null> {
-  return Promise.resolve(name ? {
-      email: 've@bit.ly',
-      id: 1,
-      username: 'vicbitly'
-    } 
-    : null);
+  return fetch(`http://${endpointIp}:${endpointPort}/users/${name}`, {
+    method: 'GET',
+    mode: 'no-cors'
+  })
+    .then((response) => {
+      return response.json().then((data) => {
+        return {
+          email: data.email,
+          id: data.id,
+          username: data.username
+        };
+      });
+    })
+    .catch((err) => {
+      return null;
+    });
 }
 
 export async function saveUser(user: IWriteUser): Promise<boolean> {
-  console.log('Saving User'); // tslint:disable-line
-  console.dir(user); // tslint:disable-line
-  return Promise.resolve(true);
+  return fetch(`http://${endpointIp}:${endpointPort}/users`, {
+    body: JSON.stringify(user),
+    method: 'POST',
+    mode: 'no-cors'
+  }).then((response) => {
+    return true; 
+  }).catch((err) => {
+    return false;
+  });
 }
