@@ -1,5 +1,15 @@
-const endpointIp: string = process.env['OCTOHACK-BACK_SERVICE_HOST'] || '35.239.86.215';
-const endpointPort: string = process.env['OCTOHACK-BACK_SERVICE_PORT'] || '80';
+let endpointIp: string = '35.192.143.42';
+let endpointPort: string = '80';
+
+getEndpointData().then((response) => {
+  endpointIp = response.ip;
+  endpointPort = response.port;
+});
+
+export interface IEndpoint {
+  ip: string;
+  port: string;
+}
 
 export interface IReadUser {
   email: string;
@@ -14,6 +24,17 @@ export interface IWriteUser {
 
 export async function saveName(name: string): Promise<string> {
   return Promise.resolve(`${name ? `Hello, ${name}` : ''}`);
+}
+
+export async function getEndpointData(): Promise<IEndpoint> {
+  return fetch('/endpoint').then((response) => {
+    const responseVal = response.json();
+      console.log(responseVal); // tslint:disable-line
+      return {
+        ip: endpointIp,
+        port: endpointPort
+      };
+  });
 }
 
 export async function getUser(name: string): Promise<IReadUser | null> {
