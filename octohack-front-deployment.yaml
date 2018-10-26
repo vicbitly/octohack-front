@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginxhttps
-        image: us.gcr.io/octohack-220220/octohack-back@sha256:97dac66c0a367a21eca4192c9ec23016b38c661bb788735d44bf5b42e2cc8770
+        image: us.gcr.io/octohack-220220/octohack-back@sha256:a7cec3ed4567c56be6d5eb08f1ad50098b26b346a64035d19ebfebb6f9dddb8c
         ports:
         - containerPort: 8080
       - name: octohack-front
