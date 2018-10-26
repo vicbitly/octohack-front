@@ -28,28 +28,29 @@ export async function saveName(name: string): Promise<string> {
 
 export async function getEndpointData(): Promise<IEndpoint> {
   return fetch('/endpoint').then((response) => {
-    const responseVal = response.json();
-      console.log(responseVal); // tslint:disable-line
+    return response.json().then((data) => {
       return {
-        ip: endpointIp,
-        port: endpointPort
+        ip: data.ip,
+        port: data.port
       };
+    });
   });
 }
 
 export async function getUser(name: string): Promise<IReadUser | null> {
   return fetch(`http://${endpointIp}:${endpointPort}/users/${name}`)
     .then((response) => {
-      const responseVal = response.json();
-      console.log(responseVal); // tslint:disable-line
-
-      return Promise.resolve(name ? {
-        email: 've@bit.ly',
-        id: 1,
-        username: 'vicbitly'
-      } 
-      : null);
-    }) 
+      return response.json().then((data) => {
+        return {
+          email: data.email,
+          id: data.id,
+          username: data.username
+        };
+      });
+    })
+    .catch((err) => {
+      return null;
+    });
 }
 
 export async function saveUser(user: IWriteUser): Promise<boolean> {
@@ -57,9 +58,8 @@ export async function saveUser(user: IWriteUser): Promise<boolean> {
     body: JSON.stringify(user),
     method: 'POST'
   }).then((response) => {
-    const responseVal = response.json();
-    console.log(responseVal); // tslint:disable-line
-    
-    return Promise.resolve(true); 
+    return true; 
+  }).catch((err) => {
+    return false;
   });
 }
