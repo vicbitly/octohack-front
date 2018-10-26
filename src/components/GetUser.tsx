@@ -18,19 +18,22 @@ class GetUser extends React.Component<IProps, {}> {
     return (
       <div className='get-user--container'>
         <h1>Get a user by username!</h1>
-        <input
-          className='get-user--input'
-          type='text'
-          value={this.props.name}
-          onChange={this.props.onChange}
-          onKeyUp={this.handleKeyUp}
-        />
-        <button
-          className='get-user--submit'
-          onClick={this.props.onSubmit}
-        >
-          Submit!
-        </button>
+        <div className='get-user--input-container'>
+          <span className='get-user--input-label'>Name:</span>
+          <input
+            className='get-user--input'
+            type='text'
+            value={this.props.name}
+            onChange={this.props.onChange}
+            onKeyUp={this.handleKeyUp}
+          />
+          <button
+            className='get-user--submit'
+            onClick={this.props.onSubmit}
+          >
+            Submit!
+          </button>
+        </div>
       </div>
     );
   }

@@ -10,10 +10,8 @@
   text-align: left;
 }
 
-.add-user--field-label {
-  display: inline-block;
-  width: 5rem;
-  font-size: 1.6rem;
+.add-user--input-label {
+  @include input-label
 }
 
 .add-user--input {

@@ -1,10 +1,17 @@
 @import '../styles/colors';
 @import '../styles/mixins';
 
-$border-radius: 0.2rem;
-
 .get-user--container {
-  margin: 2rem;
+  display: inline-block;
+  width: 40rem;
+}
+
+.get-user--input-container {
+  text-align: left;
+}
+
+.get-user--input-label {
+  @include input-label
 }
 
 .get-user--input {
