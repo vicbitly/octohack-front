@@ -53,7 +53,7 @@ class AddUser extends React.Component<IProps, {}> {
   }
 
   private handleKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && this.props.name && this.props.email) {
       this.props.onSubmit();
     }
   }
