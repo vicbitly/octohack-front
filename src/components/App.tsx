@@ -39,11 +39,13 @@ class App extends React.Component<{}, IState> {
           onChangeEmail={this.makeHandleFieldChange('addUserEmail')}
           onSubmit={this.handleAddUser}
         />
+        <br />
         <GetUser
           name={this.state.getUserUsername}
           onChange={this.makeHandleFieldChange('getUserUsername')}
           onSubmit={this.handleGetUser}
         />
+        <br />
         {this.state.currentUser && <DisplayUser
           user={this.state.currentUser}
         />}

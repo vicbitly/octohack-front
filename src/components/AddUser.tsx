@@ -21,7 +21,7 @@ class AddUser extends React.Component<IProps, {}> {
       <div className='add-user--container'>
         <h1>Add a user!</h1>
         <div className='add-user--input-container'>
-          <span className='add-user--field-label'>Name:</span>
+          <span className='add-user--input-label'>Name:</span>
           <input
             className='add-user--input'
             type='text'
@@ -32,7 +32,7 @@ class AddUser extends React.Component<IProps, {}> {
 
           <br />
 
-          <span className='add-user--field-label'>Email:</span>
+          <span className='add-user--input-label'>Email:</span>
           <input
             className='add-user--input'
             type='text'
