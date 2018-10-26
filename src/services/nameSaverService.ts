@@ -38,7 +38,10 @@ export async function getEndpointData(): Promise<IEndpoint> {
 }
 
 export async function getUser(name: string): Promise<IReadUser | null> {
-  return fetch(`http://${endpointIp}:${endpointPort}/users/${name}`)
+  return fetch(`http://${endpointIp}:${endpointPort}/users/${name}`, {
+    method: 'GET',
+    mode: 'no-cors'
+  })
     .then((response) => {
       return response.json().then((data) => {
         return {
@@ -56,7 +59,8 @@ export async function getUser(name: string): Promise<IReadUser | null> {
 export async function saveUser(user: IWriteUser): Promise<boolean> {
   return fetch(`http://${endpointIp}:${endpointPort}/users`, {
     body: JSON.stringify(user),
-    method: 'POST'
+    method: 'POST',
+    mode: 'no-cors'
   }).then((response) => {
     return true; 
   }).catch((err) => {
