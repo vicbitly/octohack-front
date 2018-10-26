@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: octohack-front
-  replicas: 5
+  replicas: 1
   template:
     metadata:
       labels:
