@@ -1,0 +1,25 @@
+@import '../styles/colors';
+@import '../styles/mixins';
+
+.add-user--container {
+  display: inline-block;
+  width: 40rem;
+}
+
+.add-user--input-container {
+  text-align: left;
+}
+
+.add-user--field-label {
+  display: inline-block;
+  width: 5rem;
+  font-size: 1.6rem;
+}
+
+.add-user--input {
+  @include input-text;
+}
+
+.add-user--submit {
+  @include button-orange;
+}

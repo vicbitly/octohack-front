@@ -1,0 +1,16 @@
+@import '../styles/colors';
+@import '../styles/mixins';
+
+$border-radius: 0.2rem;
+
+.get-user--container {
+  margin: 2rem;
+}
+
+.get-user--input {
+  @include input-text;
+}
+
+.get-user--submit {
+  @include button-orange;
+}

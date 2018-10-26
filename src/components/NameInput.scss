@@ -1,0 +1,17 @@
+@import '../styles/colors';
+@import '../styles/mixins';
+
+.name-input--container {
+  margin: 2rem;
+}
+
+.name-input--input {
+  margin: 0.5rem;
+  padding: 0.4rem;
+  border: 0.1rem solid $color-black;
+  border-radius: $border-radius;
+}
+
+.name-input--submit {
+  @include button-orange;
+}
