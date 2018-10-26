@@ -1,12 +1,17 @@
 import * as React from 'react';
-import { saveName } from '../services/nameSaverService';
 import './App.scss';
-import NameDisplay from './NameDisplay';
-import NameInput from './NameInput';
+
+import { getUser, IReadUser, saveUser } from '../services/nameSaverService';
+
+import AddUser from './AddUser';
+import DisplayUser from './DisplayUser';
+import GetUser from './GetUser';
 
 interface IState {
-  displayValue: string;
-  name: string;
+  addUserEmail: string;
+  addUserUsername: string;
+  currentUser: IReadUser | null;
+  getUserUsername: string;
 }
 
 class App extends React.Component<{}, IState> {
@@ -14,8 +19,9 @@ class App extends React.Component<{}, IState> {
     super(props, ctx);
 
     this.getInitialState = this.getInitialState.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleSaveName = this.handleSaveName.bind(this);
+    this.handleAddUser = this.handleAddUser.bind(this);
+    this.handleGetUser = this.handleGetUser.bind(this);
+    this.makeHandleFieldChange = this.makeHandleFieldChange.bind(this);
 
     this.state = this.getInitialState();
   }
@@ -26,41 +32,68 @@ class App extends React.Component<{}, IState> {
         <header className='app--header'>
           <h1>The Silliest App There Ever Was</h1>
         </header>
-        <NameInput
-          name={this.state.name}
-          onChange={this.handleNameChange}
-          onSubmit={this.handleSaveName}
+        <AddUser
+          name={this.state.addUserUsername}
+          email={this.state.addUserEmail}
+          onChangeName={this.makeHandleFieldChange('addUserUsername')}
+          onChangeEmail={this.makeHandleFieldChange('addUserEmail')}
+          onSubmit={this.handleAddUser}
         />
-        <NameDisplay
-          name={this.state.displayValue}
+        <GetUser
+          name={this.state.getUserUsername}
+          onChange={this.makeHandleFieldChange('getUserUsername')}
+          onSubmit={this.handleGetUser}
         />
+        {this.state.currentUser && <DisplayUser
+          user={this.state.currentUser}
+        />}
       </div>
     );
   }
 
   private getInitialState(): IState {
     return {
-      displayValue: '',
-      name: ''
+      addUserEmail: '',
+      addUserUsername: '',
+      currentUser: null,
+      getUserUsername: ''
     };
   }
 
-  private handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const name = e.target.value;
+  private makeHandleFieldChange = (forProperty: string) => 
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      this.setState((prevState: IState) => {
+        const newState = { ...prevState };
+        newState[forProperty] = value;
+        return newState;
+      });
+    }
+
+  private async handleAddUser() {
+    const success = await saveUser({
+      email: this.state.addUserEmail,
+      username: this.state.addUserUsername
+    });
+
+    if (success) { 
+      this.setState((prevState: IState) => {
+        return {
+          ...prevState,
+          addUserEmail: '',
+          addUserUsername: ''
+        };
+      });
+    }
+  }
+
+  private async handleGetUser() {
+    const currentUser = await getUser(this.state.getUserUsername);
     this.setState((prevState: IState) => {
       return {
         ...prevState,
-        name
-      };
-    });
-  }
-
-  private async handleSaveName() {
-    const displayValue = await saveName(this.state.name);
-    this.setState((prevState: IState) => {
-      return {
-        displayValue,
-        name: ''
+        currentUser,
+        getUserUsername: ''
       };
     });
   }

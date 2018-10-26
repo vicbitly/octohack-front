@@ -1,6 +1,5 @@
 @import '../styles/colors';
-
-$border-radius: 0.2rem;
+@import '../styles/mixins';
 
 .name-input--container {
   margin: 2rem;
@@ -14,9 +13,5 @@ $border-radius: 0.2rem;
 }
 
 .name-input--submit {
-  padding: 0.6rem;
-  border: 0;
-  border-radius: $border-radius;
-  background-color: $color-orange;
-  color: $color-white;
+  @include button-orange;
 }

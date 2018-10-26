@@ -1,0 +1,21 @@
+@import 'colors';
+
+$border-radius: 0.2rem;
+
+@mixin input-text {
+  margin: 0.5rem;
+  padding: 0.4rem;
+  border: 0.1rem solid $color-black;
+  border-radius: $border-radius;
+  font-size: 1.2rem;
+  width: 25rem;
+}
+
+@mixin button-orange {
+  margin: 0.6rem;
+  padding: 0.6rem;
+  border: 0;
+  border-radius: $border-radius;
+  background-color: $color-orange;
+  color: $color-white;
+}
